@@ -7,6 +7,6 @@ exports.ip_address = process.env.IP_ADDRESS || "127.0.0.1";
 exports.twilio = {
   sid: process.env.TWILIO_SID,
   authToken: process.env.TWILIO_AUTH_TOKEN,
-  outgoingId:
+  outgoingId: '',
   hostname: 'sendmypin.org'
 };
