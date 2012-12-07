@@ -5,7 +5,7 @@
 const fs          = require("fs"),
       winston     = require("winston"),
       config      = require("../etc/config"),
-      pubkey      = fs.readFileSync(config.pub_key_path, "utf8");
+      pubkey      = JSON.parse(fs.readFileSync(config.pub_key_path, "utf8"));
 
 module.exports = function() {
   var well_known_last_mod = new Date().getTime();
@@ -31,7 +31,7 @@ module.exports = function() {
     res.setHeader("Cache-Control", "max-age=" + timeout);
     res.setHeader("Last-Modified", new Date(well_known_last_mod).toUTCString());
     res.json({
-      "public-key": JSON.stringify(pubkey),
+      "public-key": pubkey,
       "authentication": "/sign_in",
       "provisioning": "/provision"
     });
