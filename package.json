@@ -2,8 +2,10 @@
   "name": "2factor-persona-idp",
   "version": "0.0.1",
   "dependencies": {
+    "compute-cluster": "0.0.7",
     "express": "3.0.4",
     "jade": "0.27.7",
+    "jwcrypto": "0.3.1",
     "twilio": "0.4.1",
     "winston": "0.6.2"
   },

@@ -26,3 +26,10 @@ exports.twilio = {
 exports.pub_key_path = path.join(__dirname, "..", "..", "idp-cert", "key.publickey");
 exports.priv_key_path = path.join(__dirname, "..", "..", "idp-cert", "key.secretkey");
 exports.pub_key_ttl = 120;
+
+// Maximum number of processes to use for key-signing
+exports.max_compute_processes = 20;
+
+exports.get = function(name) {
+  return exports[name];
+};

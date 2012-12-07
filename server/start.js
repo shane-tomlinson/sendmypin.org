@@ -3,15 +3,14 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 const express     = require("express"),
-      fs          = require("fs"),
       path        = require("path"),
       winston     = require("winston"),
       send_sms    = require("./lib/send-sms"),
-      config      = require("./etc/config"),
-      pubkey      = fs.readFileSync(config.pub_key_path, "utf8");
+      well_known  = require("./lib/well-known"),
+      cert_key    = require("./lib/cert-key"),
+      config      = require("./etc/config");
 
 send_sms.init({}, function(err) {
-  var well_known_last_mod = new Date().getTime();
   var app = express();
 
   app.set("view engine", "jade");
@@ -73,37 +72,11 @@ send_sms.init({}, function(err) {
     }
   });
 
-  app.get("/.well-known/browserid", function(req, res, next) {
-    var start = new Date(),
-        timeout = config.pub_key_ttl;
+  app.get("/.well-known/browserid", well_known());
 
-    if (req.headers["if-modified-since"] !== undefined) {
-      var since = new Date(req.headers["if-modified-since"]);
-      if (isNaN(since.getTime())) {
-        winston.error("======== Bad date in If-Modified-Since header");
-      } else {
-        // Does the client already have the latest copy?
-        if (since >= well_known_last_mod) {
-          // TODO move above?
-          res.setHeader("Cache-Control", "max-age=" + timeout);
-          return res.send(304);
-        }
-      }
-    }
-
-    var pk = JSON.stringify(pubKey);
-    res.setHeader("Cache-Control", "max-age=" + timeout);
-    res.setHeader("Last-Modified", new Date(well_known_last_mod).toUTCString());
-    res.json({
-      "public-key": pk,
-      "authentication": "/sign_in",
-      "provisioning": "/provision"
-    });
-
-  });
-
-  app.post("/cert_key", function(req, res, next) {
-  });
+  app.post("/cert_key", cert_key({
+    issuer_hostname: config.hostname
+  }));
 
 
   winston.log("info", "starting server on " + config.ip_address + ":" + config.port);
