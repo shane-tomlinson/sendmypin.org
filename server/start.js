@@ -3,12 +3,15 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 const express     = require("express"),
+      fs          = require("fs"),
       path        = require("path"),
       winston     = require("winston"),
       send_sms    = require("./lib/send-sms"),
-      config      = require("./etc/config");
+      config      = require("./etc/config"),
+      pubkey      = fs.readFileSync(config.pub_key_path, "utf8");
 
 send_sms.init({}, function(err) {
+  var well_known_last_mod = new Date().getTime();
   var app = express();
 
   app.set("view engine", "jade");
@@ -32,7 +35,7 @@ send_sms.init({}, function(err) {
   });
 
   app.get("/tel", function(req, res, next) {
-    var tel = req.query.tel.trim().replace(/[\+\s]/g, '');
+    var tel = req.query.tel.trim().replace(/[\+\s]/g, "");
 
     if (req.session.authenticated && tel === req.session.tel) {
       res.json({ success: true });
@@ -43,7 +46,7 @@ send_sms.init({}, function(err) {
   });
 
   app.post("/tel", function(req, res, next) {
-    var tel = req.body.tel.trim().replace(/[\+\s]/g, '');
+    var tel = req.body.tel.trim().replace(/[\+\s]/g, "");
     winston.info("received telephone number: " + tel);
 
     send_sms.sendSMS(tel, function(err, pin) {
@@ -68,6 +71,35 @@ send_sms.init({}, function(err) {
       req.session.authenticated = false;
       res.json({ success: false });
     }
+  });
+
+  app.get("/.well-known/browserid", function(req, res, next) {
+    var start = new Date(),
+        timeout = config.pub_key_ttl;
+
+    if (req.headers["if-modified-since"] !== undefined) {
+      var since = new Date(req.headers["if-modified-since"]);
+      if (isNaN(since.getTime())) {
+        winston.error("======== Bad date in If-Modified-Since header");
+      } else {
+        // Does the client already have the latest copy?
+        if (since >= well_known_last_mod) {
+          // TODO move above?
+          res.setHeader("Cache-Control", "max-age=" + timeout);
+          return res.send(304);
+        }
+      }
+    }
+
+    var pk = JSON.stringify(pubKey);
+    res.setHeader("Cache-Control", "max-age=" + timeout);
+    res.setHeader("Last-Modified", new Date(well_known_last_mod).toUTCString());
+    res.json({
+      "public-key": pk,
+      "authentication": "/sign_in",
+      "provisioning": "/provision"
+    });
+
   });
 
   app.post("/cert_key", function(req, res, next) {

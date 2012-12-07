@@ -2,9 +2,17 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+const path        = require("path");
+
 exports.port = process.env.PORT || 3000;
 exports.ip_address = process.env.IP_ADDRESS || "127.0.0.1";
 exports.hostname = "sendmypin.org";
+
+// PIN info.
+exports.pin_length = 6;
+exports.pin_message = "Your PIN is %s";
+
+// Twilio creds.
 exports.twilio = {
   sid: process.env.TWILIO_SID,
   authToken: process.env.TWILIO_AUTH_TOKEN,
@@ -12,7 +20,9 @@ exports.twilio = {
   outgoing: process.env.TWILIO_OUTGOING_ID,
   hostname: "sendmypin.org"
 };
-exports.pin_length = 6;
-exports.pin_message = "Your PIN is %s";
-exports.pub_key_path = "";
-exports.priv_key_path = "";
+
+
+// The path to the public/private keypair used to sign certificates.
+exports.pub_key_path = path.join(__dirname, "..", "..", "idp-cert", "key.publickey");
+exports.priv_key_path = path.join(__dirname, "..", "..", "idp-cert", "key.secretkey");
+exports.pub_key_ttl = 120;
