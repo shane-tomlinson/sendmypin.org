@@ -1,0 +1,9 @@
+{
+  "processes": [
+    "server/start.js"
+  ],
+  "env": {
+    "NODE_ENV": "aws"
+  }
+}
+

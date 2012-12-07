@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  form(method='post', action='/tel', id='form_authenticate', name='form_authenticate')
+    label(for='phone_number') Phone Number
+    input(type='tel', name='phone_number', placeholder='+44 750 383 6211')
+    button Submit
+
+  form(method='post', action='/pin', id='form_pin', name='form_pin')
+    label(for='pin') PIN
+    input(type='number', name='pin', placeholder='815635')
+    button Submit
+
+  script(src='https://login.persona.org/provisioning_api.js')
