@@ -1,14 +1,18 @@
 extends layout
 
 block content
-  form(method='post', action='/tel', id='form_authenticate', name='form_authenticate')
+  form(method='post', action='/tel', name='form_authenticate')#form_authenticate.hidden
     label(for='phone_number') Phone Number
-    input(type='tel', name='phone_number', placeholder='+44 750 383 6211')
+    input(type='tel', name='phone_number', placeholder='+44 750 383 6211')#phone_number
     button Submit
 
-  form(method='post', action='/pin', id='form_pin', name='form_pin')
+  form(method='post', action='/pin', name='form_pin')#form_pin.hidden
     label(for='pin') PIN
-    input(type='number', name='pin', placeholder='815635')
+    input(type='number', name='pin', placeholder='815635')#pin
     button Submit
 
-  script(src='https://login.persona.org/provisioning_api.js')
+  p#success.hidden Success! You are now signed in.
+
+  script(src='https://login.persona.org/authentication_api.js')
+  script(src='js/jquery-1.8.3.min.js')
+  script(src='js/sign_in.js')

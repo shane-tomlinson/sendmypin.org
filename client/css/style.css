@@ -116,6 +116,7 @@ label:after {
   content: ":";
 }
 
-#form_pin {
+.hidden {
   display: none;
 }
+
