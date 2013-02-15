@@ -4,6 +4,12 @@
   ],
   "env": {
     "NODE_ENV": "aws"
+  },
+  "hooks": {
+    "postdeploy": "scripts/awsbox_remote/post_deploy.sh"
+  },
+  "local_hooks": {
+    "postcreate": "scripts/awsbox_local/post_create.sh"
   }
 }
 
