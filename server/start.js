@@ -10,6 +10,8 @@ const express     = require("express"),
       cert_key    = require("./lib/cert-key"),
       config      = require("./etc/config");
 
+const browserid_host = config.get("browserid_host");
+
 send_sms.init({}, function(err) {
   if (err) {
     winston.error(String(err));
@@ -31,11 +33,15 @@ send_sms.init({}, function(err) {
     req.session.authenticated = false;
     req.session.tel = req.session.pin = null;
 
-    res.render("sign_in");
+    res.render("sign_in", {
+      browserid_host: browserid_host
+    });
   });
 
   app.get("/provision", function(req, res, next) {
-    res.render("provision");
+    res.render("provision", {
+      browserid_host: browserid_host
+    });
   });
 
   app.get("/tel", function(req, res, next) {

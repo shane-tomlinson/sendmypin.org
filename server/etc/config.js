@@ -33,6 +33,9 @@ exports.max_compute_processes = 20;
 // Default certificate duration in ms
 exports.certificat_validity_ms = 3600;
 
+// The browserid host. Javascript includes come from here.
+exports.browserid_host = "https://checkmyidp.org";
+
 exports.get = function(name) {
   return exports[name];
 };
