@@ -8,7 +8,7 @@ module.exports = function(config) {
     // validate optional 'duration' parameter
     if (!req.body.duration) {
       req.body.duration = config.get('certificate_validity_ms');
-    } else if (typeof req.body.duration !== 'number') {
+    } else if (typeof req.body.duration !== 'number' && parseInt(req.body.duration, 10) != req.body.duration) {
       return res.json({
         success: false,
         reason: 'duration argument must be a number when present'
