@@ -9,8 +9,13 @@
     isAuthenticated(tel, function(authenticated) {
       if (authenticated) {
         navigator.id.genKeyPair(function(pubKey) {
-          certifyKey(email, pubKey, certDuration, function(cert) {
-            navigator.id.registerCertificate(certificate);
+          certifyKey(email, pubKey, certDuration, function(status) {
+            if (status.success) {
+              navigator.id.registerCertificate(status.certificate);
+            }
+            else {
+              navigator.id.raiseProvisioningFailure(status.reason);
+            }
           });
         });
       }
@@ -33,16 +38,16 @@
     });
   }
 
-  function certifyKey(key, duration, done) {
+  function certifyKey(email, pubkey, duration, done) {
     $.ajax({
       type: "POST",
       url: "/cert_key",
       data: {
-        key: key,
+        email: email,
+        pubkey: pubkey,
         duration: duration
       },
-      success: function(resp) {
-      }
+      success: done
     });
   }
 }());

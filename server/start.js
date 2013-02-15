@@ -11,6 +11,11 @@ const express     = require("express"),
       config      = require("./etc/config");
 
 send_sms.init({}, function(err) {
+  if (err) {
+    winston.error(String(err));
+    process.exit(1);
+  }
+
   var app = express();
 
   app.set("view engine", "jade");

@@ -30,6 +30,9 @@ exports.pub_key_ttl = 120;
 // Maximum number of processes to use for key-signing
 exports.max_compute_processes = 20;
 
+// Default certificate duration in ms
+exports.certificat_validity_ms = 3600;
+
 exports.get = function(name) {
   return exports[name];
 };
