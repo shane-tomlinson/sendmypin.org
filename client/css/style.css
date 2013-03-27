@@ -71,7 +71,7 @@ html[xmlns] .cf {
 body {
   background: #f6f6f6 url('/i/bg-tile.png') repeat-x;
   color: #41596b;
-  font-family: Georgia,serif;
+  font-family: 'Merriweather Sans', Georgia, serif;
   font-size: 16px;
   line-height: 24px;
 }

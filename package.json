@@ -7,7 +7,9 @@
     "jade": "0.27.7",
     "jwcrypto": "0.3.1",
     "twilio": "0.4.1",
-    "winston": "0.6.2"
+    "winston": "0.6.2",
+    "connect-fonts": "0.0.9-alpha9",
+    "connect-fonts-merriweathersans": "git://github.com/shane-tomlinson/connect-fonts-merriweathersans.git#6eddbfc780706a5ea38b6bf071e742512dc19f61"
   },
 
   "devDependencies": {

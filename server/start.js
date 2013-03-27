@@ -5,6 +5,10 @@
 const express     = require("express"),
       path        = require("path"),
       winston     = require("winston"),
+      connect_fonts
+                  = require('connect-fonts'),
+      font_merriweather_sans
+                  = require('connect-fonts-merriweathersans'),
       send_sms    = require("./lib/send-sms"),
       well_known  = require("./lib/well-known"),
       cert_key    = require("./lib/cert-key"),
@@ -28,6 +32,12 @@ send_sms.init({}, function(err) {
        secret: "mysecret"
      }))
      .use(express.static(path.join(__dirname, "..", "client")));
+
+  app.use(connect_fonts.setup({
+    fonts: [ font_merriweather_sans ],
+    allow_origin: "*",
+    ua: 'all'
+  }));
 
   app.get("/sign_in", function(req, res, next) {
     req.session.authenticated = false;
