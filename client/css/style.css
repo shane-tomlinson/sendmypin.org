@@ -87,15 +87,35 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1.splash {
-  font-size: 58px;
+  font-size: 2em;
   letter-spacing: -3px;
-  text-align: center;
+}
+
+h2 {
+  font-size: 1.25em;
+  letter-spacing: -2px;
 }
 
 
 header {
   margin-bottom: 1em;
 }
+
+footer {
+  margin-top: 2em;
+  padding-top: 1em;
+  border-top: 1px solid #ccc;
+}
+
+footer li {
+  display: inline-block;
+  margin-right: 1em;
+}
+
+p {
+  margin-top: 1em;
+}
+
 
 .right {
   float: right;
@@ -107,7 +127,7 @@ header {
 
 label {
   display: inline-block;
-  min-width: 7em;
+  min-width: 18em;
   text-align: right;
   margin-right: 0.5em;
 }

@@ -2,8 +2,8 @@ extends layout
 
 block content
   form(method='post', action='/tel', name='form_authenticate')#form_authenticate.hidden
-    label(for='phone_number') Phone Number
-    input(type='tel', name='phone_number', placeholder='+44 750 383 6211')#phone_number
+    label(for='phone_number') Phone Number (with country code)
+    input(type='tel', name='phone_number', placeholder='447503836211')#phone_number
     button Submit
 
   form(method='post', action='/pin', name='form_pin')#form_pin.hidden

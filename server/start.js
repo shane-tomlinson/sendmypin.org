@@ -39,6 +39,14 @@ send_sms.init({}, function(err) {
     ua: 'all'
   }));
 
+  app.get("/", function(req, res, next) {
+    res.render("index", {});
+  });
+
+  app.get("/index.html", function(req, res, next) {
+    res.redirect("/");
+  });
+
   app.get("/sign_in", function(req, res, next) {
     req.session.authenticated = false;
     req.session.tel = req.session.pin = null;
