@@ -34,7 +34,7 @@ describe("send-sms", function() {
           assert.equal(err, null);
           assert.ok(pin.length);
 
-          assert.equal(phoneMock.to, telToSMS);
+          assert.equal(phoneMock.to, "+" + telToSMS);
           assert.ok(phoneMock.body.length);
 
           done();

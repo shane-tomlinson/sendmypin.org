@@ -38,6 +38,7 @@ exports.sendSMS = function(phoneNumber, done) {
   var pin = exports.generatePIN(),
       message = config.pin_message.replace(/%s/, pin);
 
+  if (! /^\+/.test(phoneNumber)) phoneNumber = "+" + phoneNumber;
   winston.info("sending sms: " + message + " to " + phoneNumber);
   phone.sendSms(phoneNumber, message, null, function(sms) {
     done && done(null, pin);
