@@ -16,6 +16,9 @@ const express     = require("express"),
 
 const browserid_host = config.get("browserid_host");
 
+// Cache fonts for 180 days.
+const MAX_FONT_AGE_MS = 1000 * 60 * 60 * 24 * 180;
+
 send_sms.init({}, function(err) {
   if (err) {
     winston.error(String(err));
@@ -36,7 +39,8 @@ send_sms.init({}, function(err) {
   app.use(connect_fonts.setup({
     fonts: [ font_merriweather_sans ],
     allow_origin: "*",
-    ua: 'all'
+    ua: 'all',
+    maxage: MAX_FONT_AGE_MS
   }));
 
   app.get("/", function(req, res, next) {
