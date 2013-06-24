@@ -51,6 +51,12 @@ send_sms.init({}, function(err) {
     res.redirect("/");
   });
 
+  app.get("/signout", function(req, res, next) {
+    req.session.authenticated = false;
+    req.session.tel = req.session.pin = null;
+    res.redirect(301, "/sign_in");
+  });
+
   app.get("/sign_in", function(req, res, next) {
     req.session.authenticated = false;
     req.session.tel = req.session.pin = null;
