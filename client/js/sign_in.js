@@ -4,6 +4,12 @@
 (function() {
   "use strict";
 
+  if (!String.prototype.trim) {
+    String.prototype.trim = function () {
+      return this.replace(/^\s+|\s+$/g,'');
+    };
+  }
+
   navigator.id.beginAuthentication(function(email) {
     var tel = email.replace('@sendmypin.org', '');
     $("#phone_number").val(tel);
