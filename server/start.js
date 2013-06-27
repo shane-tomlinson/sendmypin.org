@@ -9,6 +9,7 @@ const express     = require("express"),
                   = require('connect-fonts'),
       font_merriweather_sans
                   = require('connect-fonts-merriweathersans'),
+      p3p         = require("./lib/p3p"),
       send_sms    = require("./lib/send-sms"),
       well_known  = require("./lib/well-known"),
       cert_key    = require("./lib/cert-key"),
@@ -42,6 +43,8 @@ send_sms.init({}, function(err) {
     ua: 'all',
     maxage: MAX_FONT_AGE_MS
   }));
+
+  app.use(p3p.setup());
 
   app.get("/", function(req, res, next) {
     res.render("index", {});
