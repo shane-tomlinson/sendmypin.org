@@ -75,13 +75,31 @@ send_sms.init({}, function(err) {
     });
   });
 
+  app.get("/.well-known/browserid", well_known());
+
+  function noCache(res) {
+    res.on('header', function() {
+      console.log("disabling headers");
+      // explicitly disallow caching - IE8 aggressively caches GET requests
+      res.setHeader('Cache-Control', 'no-cache, max-age=0');
+    });
+  }
+
+  // Below here are API calls
   app.get("/tel", function(req, res, next) {
+    noCache(res);
+
     var tel = req.query.tel.trim().replace(/[\+\s]/g, "");
+    winston.info("attempting to authenticate: " + tel);
+    winston.info("session.tel: " + req.session.tel);
+    winston.info("session.authenticated: " + req.session.authenticated);
 
     if (req.session.authenticated && tel === req.session.tel) {
+      winston.info("authenticated: true");
       res.json({ success: true });
     }
     else {
+      winston.info("authenticated: false");
       res.json({ success: false });
     }
   });
@@ -113,8 +131,6 @@ send_sms.init({}, function(err) {
       res.json({ success: false });
     }
   });
-
-  app.get("/.well-known/browserid", well_known());
 
   app.post("/cert_key", cert_key({
     issuer_hostname: config.hostname

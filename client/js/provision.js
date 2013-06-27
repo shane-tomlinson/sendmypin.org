@@ -4,6 +4,7 @@
 
 (function() {
   "use strict";
+
   navigator.id.beginProvisioning(function(email, certDuration) {
     var tel = email.replace("@sendmypin.org", "");
     isAuthenticated(tel, function(authenticated) {
