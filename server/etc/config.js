@@ -34,7 +34,7 @@ exports.max_compute_processes = 20;
 exports.certificat_validity_ms = 3600;
 
 // The browserid host. Javascript includes come from here.
-exports.browserid_host = "https://login.anosrep.org";
+exports.browserid_host = "https://login.persona.org";
 
 exports.get = function(name) {
   return exports[name];
