@@ -9,6 +9,7 @@ const express     = require("express"),
                   = require('connect-fonts'),
       font_merriweather_sans
                   = require('connect-fonts-merriweathersans'),
+      helmet      = require('helmet'),
       p3p         = require("./lib/p3p"),
       send_sms    = require("./lib/send-sms"),
       well_known  = require("./lib/well-known"),
@@ -36,6 +37,9 @@ send_sms.init({}, function(err) {
        secret: "mysecret"
      }))
      .use(express.static(path.join(__dirname, "..", "client")));
+
+  helmet.defaults(app, {xframe: false});
+  app.use(helmet.xframe('allow-from', 'https://login.persona.org'));
 
   app.use(connect_fonts.setup({
     fonts: [ font_merriweather_sans ],

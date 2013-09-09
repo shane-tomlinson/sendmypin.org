@@ -9,7 +9,8 @@
     "twilio": "0.4.1",
     "winston": "0.6.2",
     "connect-fonts": "0.0.9-beta1",
-    "connect-fonts-merriweathersans": "git://github.com/shane-tomlinson/connect-fonts-merriweathersans.git#6eddbfc780706a5ea38b6bf071e742512dc19f61"
+    "connect-fonts-merriweathersans": "git://github.com/shane-tomlinson/connect-fonts-merriweathersans.git#6eddbfc780706a5ea38b6bf071e742512dc19f61",
+    "helmet": "0.1.0"
   },
 
   "devDependencies": {
