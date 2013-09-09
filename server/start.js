@@ -38,8 +38,14 @@ send_sms.init({}, function(err) {
      }))
      .use(express.static(path.join(__dirname, "..", "client")));
 
-  helmet.defaults(app, {xframe: false});
-  app.use(helmet.xframe('allow-from', 'https://login.persona.org'));
+  helmet.defaults(app, { xframe: false, cacheControl: false });
+  app.use(helmet.xframe('allow-from', browserid_host));
+  helmet.csp.policy({
+    defaultPolicy: {
+      'default-src': ["'self'"],
+      'script-src': ["'self'", browserid_host]
+    }
+  });
 
   app.use(connect_fonts.setup({
     fonts: [ font_merriweather_sans ],
